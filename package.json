@@ -22,7 +22,10 @@
   },
   "homepage": "",
   "devDependencies": {
-    "electron": "^1.4.7",
+    "electron": "1.4.5",
     "electron-packager": "^7.0.1"
+  },
+  "dependencies": {
+    "@types/electron": "^1.4.27"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "target": "es6",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "outFile": "./dist/main.js",
+    "typeRoots" : ["./npm_modules/@types"]
+  },
+  "exclude": [
+    "node_modules",
+    "typings"
+  ]
+}
