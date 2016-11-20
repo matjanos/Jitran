@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/electron": "^1.4.27",
     "@types/menubar": "^5.1.2",
+    "@types/node": "^6.0.48",
     "menubar": "^5.1.0"
   }
 }

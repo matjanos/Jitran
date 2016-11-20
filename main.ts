@@ -1,10 +1,14 @@
 import * as Electron from 'electron';
 import * as menubar from 'menubar';
+import { TranslationService, GoogleTranslationService } from "./translationService";
 
 const WIDTH:number = 600;
 const HEIGHT:number = 300;
 
 class MainProcess {
+
+    constructor(private _translateService :TranslationService){
+    }
 
     private mb : Menubar.MenubarApp;
 
@@ -30,8 +34,12 @@ class MainProcess {
             this.mb.window.hide();
         });
         this.mb.app.on('activate', function () {
-          this.mb.showWindow()
+          this.mb.showWindow();
         })
+
+        this.mb.on('show', ()=>{
+            this._translateService.translate('pl','en','wycofanie', (result)=>Electron.dialog.showMessageBox({ message: "Win", detail: result,buttons: ["Save All", "Revert All", "Cancel"], })
+        });
     }
 
     public getMenuBarSettings():Menubar.MenubarOptions{
@@ -47,5 +55,5 @@ class MainProcess {
     }
 }
 
-let mainProcess = new MainProcess();
+let mainProcess = new MainProcess(new GoogleTranslationService());
 mainProcess.createWindow();

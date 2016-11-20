@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6",
+    "target": "es5",
     "outDir": "dist",
     "rootDir": ".",
     "sourceMap": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "typeRoots" : ["./npm_modules/@types"]
+    "typeRoots" : ["./npm_modules/@types"],
+    "types": [
+      "electron",
+      "menubar"
+    ]
   },
   "exclude": [
-    "node_modules",
-    "typings"
+    "node_modules"
   ]
 }
