@@ -1,25 +1,51 @@
 import * as Electron from 'electron';
+import * as menubar from 'menubar';
 
-class MainProcess{
+const WIDTH:number = 600;
+const HEIGHT:number = 300;
 
-    /**
-     *
-     */
-    constructor(private _htmlFile:string) {
+class MainProcess {
+
+    private mb : Menubar.MenubarApp;
+
+    public createWindow() {
+        this. mb = menubar(this.getMenuBarSettings());
+
+        this.mb.on('ready', ()=> {
+            console.log('JiTranslate ready');
+            this.mb.window = new Electron.BrowserWindow({
+                frame:false,
+                transparent: true,
+                width:WIDTH,
+                height:HEIGHT,
+                maximizable: false,
+                modal:true,
+                movable:false,
+                alwaysOnTop:true,
+                fullscreenable: false,
+                icon:'./ico/tray.png',
+                skipTaskbar: true
+            });
+            this.mb.window.loadURL(`${__dirname}/index.html`)
+            this.mb.window.hide();
+        });
+        this.mb.app.on('activate', function () {
+          this.mb.showWindow()
+        })
     }
 
-    public createWindow(){
-        let win = new Electron.BrowserWindow({width: 800, height: 600});
-        win.on('closed', () => {
-            win = null
-        });
-        
-        // Or load a local HTML file
-        win.loadURL(`file://${__dirname}/${this._htmlFile}`);
+    public getMenuBarSettings():Menubar.MenubarOptions{
+        let options :Menubar.MenubarOptions;
+        options = {
+            icon:'./ico/tray.png',
+            preloadWindow:true,
+            width:WIDTH,
+            height:HEIGHT
+        }
+
+        return options;
     }
 }
 
-Electron.app.on('ready',()=>{
-    let mainProcess = new MainProcess("index.html");
-    mainProcess.createWindow();
-});
+let mainProcess = new MainProcess();
+mainProcess.createWindow();

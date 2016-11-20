@@ -4,7 +4,7 @@
   "description": "An Electron-based translator",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc & cp index.html ./dist/ & cp -R ./css ./dist & cp -R ./ico ./dist",
     "prestart": "npm run build",
     "start": "electron .",
     "dist-win32-x64": "npm run build && electron-packager . --out=dist --platform=win32 --arch=x64 --overwrite",
@@ -26,6 +26,8 @@
     "electron-packager": "^7.0.1"
   },
   "dependencies": {
-    "@types/electron": "^1.4.27"
+    "@types/electron": "^1.4.27",
+    "@types/menubar": "^5.1.2",
+    "menubar": "^5.1.0"
   }
 }
