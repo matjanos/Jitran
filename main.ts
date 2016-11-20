@@ -1,4 +1,4 @@
-import * as Electron from 'electron';
+import { remote, ipcMain, app, BrowserWindow } from 'electron';
 import * as menubar from 'menubar';
 import { TranslationService, GoogleTranslationService } from "./translationService";
 
@@ -17,11 +17,11 @@ class MainProcess {
 
         this.mb.on('ready', ()=> {
             console.log('JiTranslate ready');
-            this.mb.window = new Electron.BrowserWindow({
+            this.mb.window = new BrowserWindow({
                 frame:false,
                 transparent: true,
                 width:WIDTH,
-                height:HEIGHT,
+                height:HEIGHT-25,
                 maximizable: false,
                 modal:true,
                 movable:false,
@@ -38,7 +38,14 @@ class MainProcess {
         })
 
         this.mb.on('show', ()=>{
-            this._translateService.translate('pl','en','wycofanie', (result)=>Electron.dialog.showMessageBox({ message: "Win", detail: result,buttons: ["Save All", "Revert All", "Cancel"], })
+            let query = 'wycofanie';
+            let sourceLang='pl';
+            let destinationLang='en';
+
+            this._translateService.translate(sourceLang, destinationLang, query,
+                (result)=>{
+                    ipcMain.emit('translation-performed', {query: query, translation:result, sourceLang:sourceLang, destinationLang: destinationLang});
+                })
         });
     }
 
