@@ -3,21 +3,19 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script>
-        require('./main.view.js');
-    </script>
     
     </head>
 
 <body>
     <div class="main-container">
-        <h1>Hello world!</h1>
-        <div id="userProfile">
+        <h1>Tłumaczenie</h1>
+        <div id="user-profile">
             <h2>User Profile</h2>
-            <img rv-src="user.photo">
-            <p>Name: { user.name }</p>
+            <p data-text="user.name"></p>
+            <p>{user.name}</p>
         </div>
     </div>
 </body>
+    <script src="main.view.js"></script>
 
 </html>

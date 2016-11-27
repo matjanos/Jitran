@@ -1,4 +1,3 @@
-var $ = require("jquery");
 let rivets = require("rivets");
 
 var user = {
@@ -7,7 +6,7 @@ var user = {
   favColour: 'blue'
 };
 
-var element = document.querySelector("#userProfile");
+var element =document.getElementById('user-profile');
 console.log (element);
 
 rivets.bind(
