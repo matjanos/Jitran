@@ -1,4 +1,4 @@
-import { remote, ipcMain, app, BrowserWindow, clipboard } from 'electron';
+import { remote, ipcMain, app, BrowserWindow globalShortcut, clipboard } from 'electron';
 import * as menubar from 'menubar';
 import { TranslationService, GoogleTranslationService } from "./translationService";
 
@@ -30,24 +30,42 @@ class MainProcess {
                 icon:'./ico/tray.png',
                 skipTaskbar: true
             });
+
+            const ret = globalShortcut.register('CommandOrControl+M', () => {
+                let query = clipboard.readText('selection');
+                let sourceLang='auto';
+                let destinationLang='pl';
+
+                this._translateService.translate(sourceLang, destinationLang, query,
+                    (result)=>{
+                        ipcMain.emit('translation-performed', {query: query, translation:result, sourceLang:sourceLang, destinationLang: destinationLang});
+                        this.mb.showWindow();
+                    });
+
+            });
+
+            if (!ret) {
+                console.log('registration failed')
+            }
+
+            // Check whether a shortcut is registered.
+            console.log(globalShortcut.isRegistered('CommandOrControl+M'))
+
+
             this.mb.window.loadURL(`${__dirname}/index.html`)
             this.mb.window.hide();
         });
         this.mb.app.on('activate', function () {
           this.mb.showWindow();
         })
+        this.mb.on('will-quit', () => {
+            // Unregister a shortcut.
+            globalShortcut.unregister('CommandOrControl+M')
 
-        this.mb.on('show', ()=>{
-            let query = window.getSelection().toString();
-            console.log(query);
-            let sourceLang='auto';
+            // Unregister all shortcuts.
+            globalShortcut.unregisterAll()
             let destinationLang='pl';
-
-            this._translateService.translate(sourceLang, destinationLang, query,
-                (result)=>{
-                    ipcMain.emit('translation-performed', {query: query, translation:result, sourceLang:sourceLang, destinationLang: destinationLang});
-                })
-        });
+            })
     }
 
     public getMenuBarSettings():Menubar.MenubarOptions{

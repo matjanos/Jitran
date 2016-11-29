@@ -23,7 +23,9 @@
   "homepage": "",
   "devDependencies": {
     "electron": "1.4.5",
-    "electron-packager": "^7.0.1"
+    "electron-packager": "^7.0.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.0.10"
   },
   "dependencies": {
     "@types/electron": "^1.4.27",
