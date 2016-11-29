@@ -1,15 +1,22 @@
 let rivets = require("rivets");
+let electron = require("electron");
 
-var user = {
-  name: 'Bob Smith',
-  photo: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Patrick_Barrabe.jpg',
-  favColour: 'blue'
-};
+var query={
+  source: '<<query>>',
+  translation: '<<translation>>'
+}
 
-var element =document.getElementById('user-profile');
+
+electron.remote.ipcMain.on('translation-performed',(args)=>{
+  query.source = args.query;
+  query.translation = args.translation;
+});
+
+
+var element =document.getElementById('translation');
 console.log (element);
 
 rivets.bind(
   element,
-  { user: user }
+  { query: query }
 );

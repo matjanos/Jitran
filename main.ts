@@ -1,4 +1,4 @@
-import { remote, ipcMain, app, BrowserWindow } from 'electron';
+import { remote, ipcMain, app, BrowserWindow, clipboard } from 'electron';
 import * as menubar from 'menubar';
 import { TranslationService, GoogleTranslationService } from "./translationService";
 
@@ -38,9 +38,10 @@ class MainProcess {
         })
 
         this.mb.on('show', ()=>{
-            let query = 'wycofanie';
-            let sourceLang='pl';
-            let destinationLang='en';
+            let query = window.getSelection().toString();
+            console.log(query);
+            let sourceLang='auto';
+            let destinationLang='pl';
 
             this._translateService.translate(sourceLang, destinationLang, query,
                 (result)=>{
