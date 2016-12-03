@@ -18,6 +18,7 @@ export class GoogleTranslationService implements TranslationService {
         let uriString = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
             sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(queryString);
 
+        console.log(uriString);
         https.get(uriString, (res) => {
             var body = "";
 

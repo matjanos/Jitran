@@ -3,7 +3,7 @@ import * as menubar from 'menubar';
 import { TranslationService, GoogleTranslationService,DummyTranslationService } from "./translationService";
 
 const WIDTH:number = 600;
-const HEIGHT:number = 300;
+const HEIGHT:number = 320;
 
 class MainProcess {
 

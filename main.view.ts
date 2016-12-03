@@ -11,7 +11,9 @@ electron.remote.ipcMain.on('translation-performed',(args)=>{
   query.destinationLang = q.destinationLang;
   query.sourceLang = q.sourceLang;
 
-  $(".trans").textfill();
+  $(".trans").textfill({
+    changeLineHeight:true
+  });
 });
 
 
