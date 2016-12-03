@@ -1,11 +1,18 @@
+import { TranslationService } from './translationService';
 import * as https from "https";
 
 export interface TranslationService {
     translate(sourceLang: string, targetLang: string, queryString: string, callback: any)
 }
 
+export class DummyTranslationService implements TranslationService{
+   translate(sourceLang: string, targetLang: string, queryString: string, callback: any){
+       setTimeout(()=>callback("translated "+queryString),400);
+   }
+}
 
-export class GoogleTranslationService {
+
+export class GoogleTranslationService implements TranslationService {
     public translate(sourceLang: string, targetLang: string, queryString: string, callback: any) {
 
         let uriString = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +

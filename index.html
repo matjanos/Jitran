@@ -2,19 +2,27 @@
 <html>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="css/entypo.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-    </head>
+    <meta charset="UTF-8">
+</head>
 
 <body>
     <div class="main-container">
-        <h1>Tłumaczenie</h1>
+        <h1><i class="icon-language"></i>JiTrans</h1>
         <div id="translation">
-            <h2>{query.source}</h2>
-            <h2>{query.translation}</h2>
+            <div class="trans">
+                <label>{query.sourceLang}</label>
+                <span>{query.source}</span>
+            </div>
+            <div class="trans">
+                <label>{query.destinationLang}</label>
+                <span>{query.translation}</span>
+            </div>
         </div>
     </div>
 </body>
-    <script src="main.view.js"></script>
+<script src="main.view.js"></script>
+<script src="http://jquery-textfill.github.io/jquery-textfill/jquery.textfill.min.js"></script>
 
 </html>

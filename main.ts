@@ -1,6 +1,6 @@
-import { remote, ipcMain, app, BrowserWindow globalShortcut, clipboard } from 'electron';
+import { remote, ipcMain, app, BrowserWindow, globalShortcut, clipboard } from 'electron';
 import * as menubar from 'menubar';
-import { TranslationService, GoogleTranslationService } from "./translationService";
+import { TranslationService, GoogleTranslationService,DummyTranslationService } from "./translationService";
 
 const WIDTH:number = 600;
 const HEIGHT:number = 300;
@@ -21,7 +21,7 @@ class MainProcess {
                 frame:false,
                 transparent: true,
                 width:WIDTH,
-                height:HEIGHT-25,
+                height:HEIGHT-20,
                 maximizable: false,
                 modal:true,
                 movable:false,
@@ -38,8 +38,10 @@ class MainProcess {
 
                 this._translateService.translate(sourceLang, destinationLang, query,
                     (result)=>{
-                        ipcMain.emit('translation-performed', {query: query, translation:result, sourceLang:sourceLang, destinationLang: destinationLang});
+                        let translation = {source: query, translation:result, sourceLang:sourceLang, destinationLang: destinationLang }
+                        ipcMain.emit('translation-performed', { returnValue: translation });
                         this.mb.showWindow();
+                        setTimeout(()=>this.mb.hideWindow(), 5000);
                     });
 
             });
@@ -68,13 +70,14 @@ class MainProcess {
             })
     }
 
-    public getMenuBarSettings():Menubar.MenubarOptions{
+    public getMenuBarSettings():    Menubar.MenubarOptions{
         let options :Menubar.MenubarOptions;
         options = {
             icon:'./ico/tray.png',
             preloadWindow:true,
             width:WIDTH,
-            height:HEIGHT
+            height:HEIGHT,
+            windowPosition: "bottomRight"
         }
 
         return options;
